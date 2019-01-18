@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item3" object-name="workflow:name=generic" id="eaf1dee8-61ac-4c5f-9c1f-d6dbd3afa508" version="0.0.7" api-version="6.0.0" allowed-operations="vef" restartMode="1" resumeFromFailedMode="0">
+  <display-name><![CDATA[Container Services - Create Kubernetes Cluster]]></display-name>
+  <position y="50.0" x="100.0"></position>
+  <input>
+    <param name="clusterName" type="string">
+      <description><![CDATA[name]]></description>
+    </param>
+    <param name="network" type="string">
+      <description><![CDATA[Network to connect the cluster]]></description>
+    </param>
+    <param name="storageProfile" type="string"></param>
+    <param name="template" type="string"></param>
+    <param name="nodeCount" type="number"></param>
+    <param name="cpu" type="string">
+      <description><![CDATA[Nomber of vCPUs on each node]]></description>
+    </param>
+    <param name="memory" type="string">
+      <description><![CDATA[Amount of memory (in MB) on each cluster node]]></description>
+    </param>
+    <param name="sshKey" type="string">
+      <description><![CDATA[SSH key to login to the nodes]]></description>
+    </param>
+    <param name="enableNFS" type="boolean"></param>
+    <param name="isShowAdvancedInput" type="boolean"></param>
+  </input>
+  <attrib name="content" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="result" type="number" read-only="false">
+    <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+  </attrib>
+  <attrib name="errorText" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[Error text, if any]]></description>
+  </attrib>
+  <attrib name="outputText" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[Result of running the SSH command]]></description>
+  </attrib>
+  <attrib name="vdc" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="tenant" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <workflow-item name="item0" type="end" end-mode="0">
+    <position y="45.40909090909091" x="664.5"></position>
+  </workflow-item>
+  <workflow-item name="item2" out-name="item1" type="task">
+    <display-name><![CDATA[render SSH command]]></display-name>
+    <script encoded="false"><![CDATA[content = "vcd --no-wait cse cluster create ";
+content += clusterName;
+content += ' --storage-profile "' + storageProfile + '"';
+content += ' --network "' + network + '"';
+//content += ' --ssh-key /root/.ssh/id_rsa.pub';
+if (memory) content += ' --memory ' + memory;
+if (cpu) content += ' --cpu ' + cpu;
+if (template) content += ' --template "' + template + '"';
+if (nodeCount) content += ' --nodes ' + nodeCount;
+if (enableNFS) content += " --enable-nfs";
+
+]]></script>
+    <in-binding>
+      <bind name="clusterName" type="string" export-name="clusterName"></bind>
+      <bind name="nodeCount" type="number" export-name="nodeCount"></bind>
+      <bind name="vdc" type="string" export-name="vdc"></bind>
+      <bind name="cpu" type="string" export-name="cpu"></bind>
+      <bind name="memory" type="string" export-name="memory"></bind>
+      <bind name="network" type="string" export-name="network"></bind>
+      <bind name="storageProfile" type="string" export-name="storageProfile"></bind>
+      <bind name="sshKey" type="string" export-name="sshKey"></bind>
+      <bind name="template" type="string" export-name="template"></bind>
+      <bind name="enableNFS" type="boolean" export-name="enableNFS"></bind>
+      <bind name="isShowAdvancedInput" type="boolean" export-name="isShowAdvancedInput"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="content" type="string" export-name="content"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="344.5"></position>
+  </workflow-item>
+  <workflow-item name="item1" out-name="item0" type="link" linked-workflow-id="b5a8683a-2441-4cdb-8b89-ec51132877ed">
+    <display-name><![CDATA[SSH to CSE]]></display-name>
+    <in-binding>
+      <bind name="cmd" type="string" export-name="content">
+        <description><![CDATA[The SSH command to run]]></description>
+      </bind>
+      <bind name="tenant" type="string" export-name="tenant"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="result" type="number" export-name="result">
+        <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+      </bind>
+      <bind name="errorText" type="string" export-name="errorText">
+        <description><![CDATA[Error text, if any]]></description>
+      </bind>
+      <bind name="outputText" type="string" export-name="outputText">
+        <description><![CDATA[Result of running the SSH command]]></description>
+      </bind>
+    </out-binding>
+    <position y="55.40909090909091" x="484.5"></position>
+  </workflow-item>
+  <workflow-item name="item3" out-name="item2" type="task">
+    <display-name><![CDATA[get tenant]]></display-name>
+    <script encoded="false"><![CDATA[var myCX = System.getContext();
+tenant = myCX.getParameter("_vcd_orgName");
+var tenantOrgId = myCX.getParameter("_vcd_orgId");
+var tenantUser = myCX.getParameter("_vdc_userName");
+System.log("tenantUser: " + tenantUser);
+
+ tenant = "ACME";]]></script>
+    <in-binding></in-binding>
+    <out-binding>
+      <bind name="tenant" type="string" export-name="tenant"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="204.5"></position>
+  </workflow-item>
+  <presentation>
+    <p-step>
+      <title><![CDATA[General]]></title>
+      <p-param name="clusterName">
+        <desc><![CDATA[Name]]></desc>
+        <p-qual kind="static" name="mandatory" type="boolean"><![CDATA[true]]></p-qual>
+        <p-qual kind="ognl" name="defaultValue" type="string"><![CDATA[GetAction("com.vmware.cse","generateRandomClusterName").call()]]></p-qual>
+      </p-param>
+      <p-param name="nodeCount">
+        <desc><![CDATA[Node count]]></desc>
+        <p-qual kind="static" name="defaultValue" type="number"><![CDATA[3.0]]></p-qual>
+      </p-param>
+      <p-param name="isShowAdvancedInput">
+        <desc><![CDATA[Show advanced parameters?]]></desc>
+      </p-param>
+    </p-step>
+    <p-step>
+      <title><![CDATA[Advanced]]></title>
+      <p-qual kind="ognl" name="visible" type="boolean"><![CDATA[#isShowAdvancedInput]]></p-qual>
+      <p-param name="network">
+        <desc><![CDATA[Network]]></desc>
+        <p-qual kind="ognl" name="linkedEnumeration" type="Array/string"><![CDATA[GetAction("com.vmware.cse","getStringArrayFromCSEConfig").call( "networks" )]]></p-qual>
+        <p-qual kind="static" name="mandatory" type="boolean"><![CDATA[true]]></p-qual>
+      </p-param>
+      <p-param name="storageProfile">
+        <desc><![CDATA[Storage]]></desc>
+        <p-qual kind="static" name="mandatory" type="boolean"><![CDATA[true]]></p-qual>
+        <p-qual kind="ognl" name="linkedEnumeration" type="Array/string"><![CDATA[GetAction("com.vmware.cse","getStringArrayFromCSEConfig").call( "storageProfiles" )]]></p-qual>
+      </p-param>
+      <p-param name="cpu">
+        <desc><![CDATA[CPU count]]></desc>
+        <p-qual kind="static" name="defaultValue" type="string"><![CDATA[2]]></p-qual>
+      </p-param>
+      <p-param name="template">
+        <desc><![CDATA[Template]]></desc>
+        <p-qual kind="static" name="mandatory" type="boolean"><![CDATA[true]]></p-qual>
+        <p-qual kind="ognl" name="linkedEnumeration" type="Array/string"><![CDATA[GetAction("com.vmware.cse","getStringArrayFromCSEConfig").call( "templates" )]]></p-qual>
+      </p-param>
+      <p-param name="memory">
+        <desc><![CDATA[Memory amount (MB)
+]]></desc>
+        <p-qual kind="static" name="defaultValue" type="string"><![CDATA[2048]]></p-qual>
+      </p-param>
+      <p-param name="sshKey">
+        <desc><![CDATA[SSH key to login to the nodes]]></desc>
+      </p-param>
+      <p-param name="enableNFS">
+        <desc><![CDATA[Persistent Storage (NFS)]]></desc>
+        <p-qual kind="static" name="defaultValue" type="boolean"><![CDATA[__NULL__]]></p-qual>
+      </p-param>
+    </p-step>
+  </presentation>
+</workflow>

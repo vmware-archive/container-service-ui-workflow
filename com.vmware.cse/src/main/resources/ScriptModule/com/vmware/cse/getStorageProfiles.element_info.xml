@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Exported from [server]</comment>
+<entry key="categoryPath">com.vmware.cse</entry>
+<entry key="categoryPathEscaped">Y29t.dm13YXJl.Y3Nl</entry>
+<entry key="name">getStorageProfiles</entry>
+<entry key="type">ScriptModule</entry>
+<entry key="id">687eb430-34a3-4c31-b21b-61e9afa19469</entry>
+</properties>

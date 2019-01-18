@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="extractClusterIdFromNameString" result-type="string" api-version="6.0.0" id="43317482-e1e8-43a4-8955-ff45cfce9590" version="0.0.0" allowed-operations="vef">
+  <param n="clusterNameIdString" t="string"><![CDATA[]]></param>
+  <script encoded="false"><![CDATA[var token = clusterNameIdString.split("{");
+var id = token.pop().slice(0, -1);
+return id;]]></script>
+</dunes-script-module>

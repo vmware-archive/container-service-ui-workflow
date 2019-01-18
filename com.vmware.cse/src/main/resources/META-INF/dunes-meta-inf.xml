@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>vro1.lab.o11n.com:8281</comment>
+<entry key="vso-build-nb">10044239</entry>
+<entry key="pkg-description"></entry>
+<entry key="pkg-name">com.vmware.cse</entry>
+<entry key="used-plugins">REST#2.2.2,vCloud#9.1.0</entry>
+<entry key="pkg-owner">CN=vRO Workflow Designer,OU=Unknown,O=Desktop Application,L=Unknown,ST=Unknown,C=Unknown</entry>
+<entry key="vso-version">7.5.0.10044239</entry>
+<entry key="pkg-id">ff8080816839358a01683e7ccd380006</entry>
+</properties>

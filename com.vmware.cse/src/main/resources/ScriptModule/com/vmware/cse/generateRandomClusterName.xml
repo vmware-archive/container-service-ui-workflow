@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="generateRandomClusterName" result-type="string" api-version="6.0.0" id="b71a8b09-5c8c-48d1-ad6a-e816f333372a" version="0.0.0" allowed-operations="vef">
+  <script encoded="false"><![CDATA[return "k8s-cluster-" + System.nextUUID().substring(0,3);]]></script>
+</dunes-script-module>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Exported from [server]</comment>
+<entry key="categoryPath">CSE UI.Frontend</entry>
+<entry key="categoryPathEscaped">Q1NFIFVJ.RnJvbnRlbmQ=</entry>
+<entry key="name">Container Services - Delete Node</entry>
+<entry key="type">Workflow</entry>
+<entry key="id">89ec24bb-84d4-4e19-a1e5-caf812121a10</entry>
+</properties>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item1" object-name="workflow:name=generic" id="c728c83e-c742-40b0-84d5-497a91f8386b" version="0.0.1" api-version="6.0.0" allowed-operations="vef" restartMode="1" resumeFromFailedMode="0">
+  <display-name><![CDATA[Generic vCD API call]]></display-name>
+  <position y="50.0" x="100.0"></position>
+  <input>
+    <param name="url" type="string"></param>
+    <param name="method" type="string"></param>
+    <param name="content" type="string"></param>
+  </input>
+  <output>
+    <param name="responseContent" type="string"></param>
+    <param name="responseStatus" type="number"></param>
+  </output>
+  <attrib name="vcdRestHost" type="REST:RESTHost" read-only="false" conf-id="09378544-877f-483a-9c3f-9b55a4484775" conf-key="vCDRestHost">
+    <value encoded="n"><![CDATA[dunes://service.dunes.ch/CustomSDKObject?id='d3f25783-c5f2-4587-a33e-9c06ba7583bd'&dunesName='REST:RESTHost']]></value>
+  </attrib>
+  <attrib name="sessionToken" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <workflow-item name="item0" type="end" end-mode="0">
+    <position y="45.40909090909091" x="524.5"></position>
+  </workflow-item>
+  <workflow-item name="item1" out-name="item2" type="task">
+    <display-name><![CDATA[getSessionToken]]></display-name>
+    <script encoded="false"><![CDATA[var content = "{}"
+
+var request = vcdRestHost.createRequest("POST", "/sessions",  content);
+var fullu = request.fullUrl;
+//System.debug("Full URL " + fullu);
+//System.debug("Session " + sessionToken);
+System.debug("executing Rest GET request...");
+
+//request.setHeader("x-hm-authorization", sessionToken);
+request.setHeader("Accept", "application/*+xml;version=29.0");
+
+var response = request.execute();
+var responseHeaders = response.getAllHeaders();
+sessionToken = responseHeaders.get("x-vcloud-authorization");
+System.debug("authToken: " + sessionToken);
+//System.debug("status: " + response.statusCode);
+//System.debug("headers: " + response.getAllHeaders()); 
+//System.debug("content: " + response.contentAsString);
+]]></script>
+    <in-binding>
+      <bind name="vcdRestHost" type="REST:RESTHost" export-name="vcdRestHost"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="sessionToken" type="string" export-name="sessionToken"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="204.5"></position>
+  </workflow-item>
+  <workflow-item name="item2" out-name="item0" type="task">
+    <display-name><![CDATA[rest call]]></display-name>
+    <script encoded="false"><![CDATA[
+
+
+var request = vcdRestHost.createRequest(method, url,  content);
+var fullurl = request.fullUrl;
+System.debug("Full URL " + fullurl);
+System.debug("Session " + sessionToken);
+System.debug("executing Rest request...");
+
+request.setHeader("x-vcloud-authorization", sessionToken);
+request.setHeader("Accept", "application/*+xml;version=29.0");
+
+var response = request.execute();
+System.debug("status: " + response.statusCode);
+//System.debug("headers: " + response.getAllHeaders()); 
+//System.debug("content: " + response.contentAsString);
+
+responseContent = response.contentAsString;
+responseStatus = response.statusCode;]]></script>
+    <in-binding>
+      <bind name="vcdRestHost" type="REST:RESTHost" export-name="vcdRestHost"></bind>
+      <bind name="sessionToken" type="string" export-name="sessionToken"></bind>
+      <bind name="url" type="string" export-name="url"></bind>
+      <bind name="method" type="string" export-name="method"></bind>
+      <bind name="content" type="string" export-name="content"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="responseContent" type="string" export-name="responseContent"></bind>
+      <bind name="responseStatus" type="number" export-name="responseStatus"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="344.5"></position>
+  </workflow-item>
+  <presentation>
+    <p-param name="url">
+      <desc><![CDATA[url]]></desc>
+    </p-param>
+    <p-param name="method">
+      <desc><![CDATA[method]]></desc>
+    </p-param>
+    <p-param name="content">
+      <desc><![CDATA[content]]></desc>
+    </p-param>
+  </presentation>
+</workflow>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Exported from [server]</comment>
+<entry key="categoryPath">com.vmware.cse</entry>
+<entry key="categoryPathEscaped">Y29t.dm13YXJl.Y3Nl</entry>
+<entry key="name">getClusterNamesFromCache</entry>
+<entry key="type">ScriptModule</entry>
+<entry key="id">ddee8337-b2fc-4d99-89bd-124a8bf6a58e</entry>
+</properties>

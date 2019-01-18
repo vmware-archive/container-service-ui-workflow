@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item2" object-name="workflow:name=generic" id="d90e5726-bd69-48c8-83a3-7c70deae8043" version="0.0.0" api-version="6.0.0" allowed-operations="vef" restartMode="1" resumeFromFailedMode="0">
+  <display-name><![CDATA[Set Cluster Details to vApp]]></display-name>
+  <position y="50.0" x="100.0"></position>
+  <input>
+    <param name="cluster" type="string">
+      <description><![CDATA[Cluster]]></description>
+    </param>
+    <param name="vApp" type="vCloud:VApp"></param>
+  </input>
+  <attrib name="cmd" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[The SSH command to run]]></description>
+  </attrib>
+  <attrib name="tenant" type="string" read-only="false">
+    <value encoded="n"><![CDATA[ACME]]></value>
+  </attrib>
+  <attrib name="result" type="number" read-only="false">
+    <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+  </attrib>
+  <attrib name="errorText" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[Error text, if any]]></description>
+  </attrib>
+  <attrib name="outputText" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[Result of running the SSH command]]></description>
+  </attrib>
+  <attrib name="newClusterName" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="clusterConfig" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <workflow-item name="item0" type="end" end-mode="0">
+    <position y="45.40909090909091" x="804.5"></position>
+  </workflow-item>
+  <workflow-item name="item1" out-name="item3" type="link" linked-workflow-id="b5a8683a-2441-4cdb-8b89-ec51132877ed">
+    <display-name><![CDATA[SSH to CSE]]></display-name>
+    <in-binding>
+      <bind name="cmd" type="string" export-name="cmd">
+        <description><![CDATA[The SSH command to run]]></description>
+      </bind>
+      <bind name="tenant" type="string" export-name="tenant"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="result" type="number" export-name="result">
+        <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+      </bind>
+      <bind name="errorText" type="string" export-name="errorText">
+        <description><![CDATA[Error text, if any]]></description>
+      </bind>
+      <bind name="outputText" type="string" export-name="outputText">
+        <description><![CDATA[Result of running the SSH command]]></description>
+      </bind>
+    </out-binding>
+    <position y="55.40909090909091" x="344.5"></position>
+  </workflow-item>
+  <workflow-item name="item2" out-name="item1" type="task">
+    <display-name><![CDATA[render command and find vapp]]></display-name>
+    <script encoded="false"><![CDATA[cmd = "vcd cse cluster config '" + cluster + "'";]]></script>
+    <in-binding>
+      <bind name="cluster" type="string" export-name="cluster"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="cmd" type="string" export-name="cmd"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="204.5"></position>
+  </workflow-item>
+  <workflow-item name="item3" out-name="item0" type="task">
+    <display-name><![CDATA[extract data]]></display-name>
+    <script encoded="false"><![CDATA[var regex = new RegExp('server: https?://(.*)$' , 'm');
+newClusterName = "K8s:" + outputText.match(regex)[1];
+if (!newClusterName) newClusterName = cluster;
+
+clusterConfig = "Copy below text in ~/.kube/config in order to use kubectl\n\n" + outputText;
+
+vApp.name = newClusterName;
+//vApp.description = clusterConfig;
+vApp.update();
+
+]]></script>
+    <in-binding>
+      <bind name="outputText" type="string" export-name="outputText"></bind>
+      <bind name="cluster" type="string" export-name="cluster"></bind>
+      <bind name="vApp" type="vCloud:VApp" export-name="vApp"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="newClusterName" type="string" export-name="newClusterName"></bind>
+      <bind name="clusterConfig" type="string" export-name="clusterConfig"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="484.5"></position>
+  </workflow-item>
+  <presentation>
+    <p-param name="cluster">
+      <desc><![CDATA[Cluster]]></desc>
+      <p-qual kind="ognl" name="linkedEnumeration" type="Array/string"><![CDATA[GetAction("com.vmware.cse","getClusterNamesFromCache").call()]]></p-qual>
+    </p-param>
+    <p-param name="vApp">
+      <desc><![CDATA[vApp]]></desc>
+      <p-qual kind="static" name="show-select-as" type="string"><![CDATA[list]]></p-qual>
+    </p-param>
+  </presentation>
+</workflow>

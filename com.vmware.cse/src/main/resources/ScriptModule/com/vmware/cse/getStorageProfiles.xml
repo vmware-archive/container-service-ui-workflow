@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getStorageProfiles" result-type="Array/string" api-version="6.0.0" id="687eb430-34a3-4c31-b21b-61e9afa19469" version="0.0.0" allowed-operations="vef">
+  <script encoded="false"><![CDATA[return ["iSCSI Storage" , "VSAN HOL Policy"];]]></script>
+</dunes-script-module>

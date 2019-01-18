@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config-element id="09378544-877f-483a-9c3f-9b55a4484775" version="0.0.0">
+  <display-name><![CDATA[CSE Configuration]]></display-name>
+  <atts>
+    <att name="vCDRestHost" type="REST:RESTHost" read-only="false"></att>
+    <att name="storageProfiles" type="Array/string" read-only="false"></att>
+    <att name="networks" type="Array/string" read-only="false"></att>
+    <att name="templates" type="Array/string" read-only="false"></att>
+    <att name="defaultStorageProfile" type="string" read-only="false"></att>
+    <att name="defaultTemplate" type="string" read-only="false"></att>
+    <att name="defaultNetwork" type="string" read-only="false"></att>
+    <att name="cseHost" type="string" read-only="false"></att>
+    <att name="cseUsername" type="string" read-only="false"></att>
+    <att name="csePassword" type="SecureString" read-only="false"></att>
+    <att name="vCDUsername" type="string" read-only="false"></att>
+    <att name="vCDPassword" type="string" read-only="false"></att>
+    <att name="vcdHost" type="string" read-only="false"></att>
+    <att name="defaultTenant" type="string" read-only="false">
+      <description><![CDATA[default tenant for testing ]]></description>
+    </att>
+  </atts>
+</config-element>

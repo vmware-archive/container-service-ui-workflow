@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item1" object-name="workflow:name=generic" id="ac7edf37-dd98-4d30-8b20-be70544fe12b" version="0.0.5" api-version="6.0.0" allowed-operations="vef" restartMode="1" resumeFromFailedMode="0">
+  <display-name><![CDATA[Store Clusters in Cache]]></display-name>
+  <position y="50.0" x="100.0"></position>
+  <input>
+    <param name="sleepTime" type="number">
+      <description><![CDATA[Time to sleep in seconds]]></description>
+    </param>
+  </input>
+  <attrib name="url" type="string" read-only="false">
+    <value encoded="n"><![CDATA[cse/]]></value>
+  </attrib>
+  <attrib name="method" type="string" read-only="false">
+    <value encoded="n"><![CDATA[GET]]></value>
+  </attrib>
+  <attrib name="content" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="responseContent" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="responseStatus" type="number" read-only="false"></attrib>
+  <attrib name="clusterNames" type="Array/string" read-only="false">
+    <value encoded="n"><![CDATA[__NULL__]]></value>
+  </attrib>
+  <workflow-item name="item1" out-name="item2" type="link" linked-workflow-id="c728c83e-c742-40b0-84d5-497a91f8386b">
+    <display-name><![CDATA[Generic vCD API call]]></display-name>
+    <in-binding>
+      <bind name="url" type="string" export-name="url"></bind>
+      <bind name="method" type="string" export-name="method"></bind>
+      <bind name="content" type="string" export-name="content"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="responseContent" type="string" export-name="responseContent"></bind>
+      <bind name="responseStatus" type="number" export-name="responseStatus"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="204.5"></position>
+  </workflow-item>
+  <workflow-item name="item2" out-name="item0" type="task">
+    <display-name><![CDATA[update clusters in cache]]></display-name>
+    <script encoded="false"><![CDATA[if (responseStatus == 200) {
+	DynamicTypesManager.putInCache("cseClusters", responseContent);
+	System.log("Updated clusterCache", "me");
+	//System.debug("updated clusterCache: " + responseContent);
+} else System.log("Could not update cluster cache. http response status: " + responseStatus);]]></script>
+    <in-binding>
+      <bind name="responseContent" type="string" export-name="responseContent"></bind>
+      <bind name="responseStatus" type="number" export-name="responseStatus"></bind>
+    </in-binding>
+    <out-binding></out-binding>
+    <position y="55.40909090909091" x="344.5"></position>
+  </workflow-item>
+  <workflow-item name="item3" prototype-id="sleep" out-name="item1" content-mode="x" type="task">
+    <display-name><![CDATA[Sleep]]></display-name>
+    <script encoded="false"><![CDATA[//Auto-generated script
+if ( sleepTime != null )  {
+	System.sleep(sleepTime*1000);
+}
+else  {
+	throw "'sleepTime' is NULL";
+}
+]]></script>
+    <in-binding>
+      <bind name="sleepTime" type="number" export-name="sleepTime">
+        <description><![CDATA[Time to sleep in seconds]]></description>
+      </bind>
+    </in-binding>
+    <out-binding></out-binding>
+    <description><![CDATA[Sleep a given number of seconds]]></description>
+    <position y="182.68181818181816" x="344.5"></position>
+  </workflow-item>
+  <workflow-item name="item0" out-name="item4" type="task">
+    <display-name><![CDATA[get all cluster names]]></display-name>
+    <script encoded="false"><![CDATA[clusterNames = [];
+var clusters = JSON.parse(responseContent);
+clusters.forEach(function(cluster) { clusterNames.push(cluster.name); });
+]]></script>
+    <in-binding>
+      <bind name="responseContent" type="string" export-name="responseContent"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="clusterNames" type="Array/string" export-name="clusterNames"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="465.0"></position>
+  </workflow-item>
+  <workflow-item name="item4" out-name="item3" type="foreach">
+    <display-name><![CDATA[Foreach (Store Nodes in Cache)]]></display-name>
+    <in-binding>
+      <bind name="clusterName" type="Array/string" export-name="*clusterNames"></bind>
+    </in-binding>
+    <out-binding></out-binding>
+    <reference type="Workflow" id="a8281b7e-52b0-429c-974d-109803021a13"></reference>
+    <position y="109.95454545454544" x="404.5"></position>
+  </workflow-item>
+  <presentation>
+    <p-param name="sleepTime">
+      <desc><![CDATA[Time to sleep in seconds]]></desc>
+    </p-param>
+  </presentation>
+</workflow>

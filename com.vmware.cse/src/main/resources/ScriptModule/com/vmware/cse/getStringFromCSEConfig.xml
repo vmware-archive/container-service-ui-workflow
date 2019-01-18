@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getStringFromCSEConfig" result-type="string" api-version="6.0.0" id="d45ba93f-8c88-4ed3-aeca-e013fdec2b38" version="0.0.0" allowed-operations="vef">
+  <param n="attributeName" t="string"><![CDATA[]]></param>
+  <script encoded="false"><![CDATA[var category = Server.getConfigurationElementCategoryWithPath("CSE");
+var config = category.allConfigurationElements.filter(function (item) { return item.name === "CSE Configuration"; } )[0];
+return config.getAttributeWithKey(attributeName)? config.getAttributeWithKey(attributeName).value : "notFound";]]></script>
+</dunes-script-module>

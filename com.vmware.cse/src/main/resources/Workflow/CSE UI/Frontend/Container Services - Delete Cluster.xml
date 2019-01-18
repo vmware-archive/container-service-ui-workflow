@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item2" object-name="workflow:name=generic" id="f66c041b-7c14-45bc-8f4f-622debce58a7" version="0.0.3" api-version="6.0.0" allowed-operations="vef" restartMode="1" resumeFromFailedMode="0">
+  <display-name><![CDATA[Container Services - Delete Cluster]]></display-name>
+  <position y="50.0" x="100.0"></position>
+  <input>
+    <param name="clusterName" type="string"></param>
+  </input>
+  <attrib name="url" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="method" type="string" read-only="false">
+    <value encoded="n"><![CDATA[DELETE]]></value>
+  </attrib>
+  <attrib name="content" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="responseContent" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="responseStatus" type="number" read-only="false"></attrib>
+  <workflow-item name="item0" type="end" end-mode="0">
+    <position y="45.40909090909091" x="524.5"></position>
+  </workflow-item>
+  <workflow-item name="item1" out-name="item0" type="link" linked-workflow-id="c728c83e-c742-40b0-84d5-497a91f8386b">
+    <display-name><![CDATA[Generic vCD API call]]></display-name>
+    <in-binding>
+      <bind name="url" type="string" export-name="url"></bind>
+      <bind name="method" type="string" export-name="method"></bind>
+      <bind name="content" type="string" export-name="content"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="responseContent" type="string" export-name="responseContent"></bind>
+      <bind name="responseStatus" type="number" export-name="responseStatus"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="344.5"></position>
+  </workflow-item>
+  <workflow-item name="item2" out-name="item1" type="task">
+    <display-name><![CDATA[render URL]]></display-name>
+    <script encoded="false"><![CDATA[url = "cse/" + clusterName;]]></script>
+    <in-binding>
+      <bind name="clusterName" type="string" export-name="clusterName"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="url" type="string" export-name="url"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="204.5"></position>
+  </workflow-item>
+  <presentation>
+    <p-param name="clusterName">
+      <desc><![CDATA[Cluster]]></desc>
+      <p-qual kind="ognl" name="linkedEnumeration" type="Array/string"><![CDATA[GetAction("com.vmware.cse","getClusterNamesFromCache").call()]]></p-qual>
+    </p-param>
+  </presentation>
+</workflow>

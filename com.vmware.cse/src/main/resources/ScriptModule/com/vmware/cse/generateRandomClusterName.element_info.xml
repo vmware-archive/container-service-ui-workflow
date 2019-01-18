@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Exported from [server]</comment>
+<entry key="categoryPath">com.vmware.cse</entry>
+<entry key="categoryPathEscaped">Y29t.dm13YXJl.Y3Nl</entry>
+<entry key="name">generateRandomClusterName</entry>
+<entry key="type">ScriptModule</entry>
+<entry key="id">b71a8b09-5c8c-48d1-ad6a-e816f333372a</entry>
+</properties>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns="http://vmware.com/vco/workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://vmware.com/vco/workflow http://vmware.com/vco/workflow/Workflow-v4.xsd" root-name="item3" object-name="workflow:name=generic" id="b5a8683a-2441-4cdb-8b89-ec51132877ed" version="0.0.4" api-version="6.0.0" allowed-operations="vef" restartMode="1" resumeFromFailedMode="0">
+  <display-name><![CDATA[SSH to CSE]]></display-name>
+  <position y="50.0" x="100.0"></position>
+  <input>
+    <param name="cmd" type="string">
+      <description><![CDATA[The SSH command to run]]></description>
+    </param>
+    <param name="tenant" type="string"></param>
+  </input>
+  <output>
+    <param name="result" type="number">
+      <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+    </param>
+    <param name="errorText" type="string">
+      <description><![CDATA[Error text, if any]]></description>
+    </param>
+    <param name="outputText" type="string">
+      <description><![CDATA[Result of running the SSH command]]></description>
+    </param>
+  </output>
+  <attrib name="hostNameOrIP" type="string" read-only="false" conf-id="09378544-877f-483a-9c3f-9b55a4484775" conf-key="cseHost">
+    <value encoded="n"><![CDATA[192.168.100.109]]></value>
+    <description><![CDATA[Hostname or IP address of the SSH host]]></description>
+  </attrib>
+  <attrib name="port" type="number" read-only="false">
+    <value encoded="n"><![CDATA[22.0]]></value>
+    <description><![CDATA[Target port]]></description>
+  </attrib>
+  <attrib name="username" type="string" read-only="false" conf-id="09378544-877f-483a-9c3f-9b55a4484775" conf-key="cseUsername">
+    <value encoded="n"><![CDATA[root]]></value>
+    <description><![CDATA[Username]]></description>
+  </attrib>
+  <attrib name="password" type="SecureString" read-only="false" conf-id="09378544-877f-483a-9c3f-9b55a4484775" conf-key="csePassword">
+    <value encoded="n"><![CDATA[8BJ56Q4DP77Y61R72Z65R31Z21SFB50071SCE0DC7EL5809F05YC5A67ADQA5FE6C3G8BDB473K2AC70AM7E9982AP35CF0B9WABDCBAFXD061524V812527BSE02171FLD25F3EFV23DBB5BL7A63612NE7FF955V5E2FD06PE08E21EQCF6E66AWC692632PFDFABFEU59497A8K2234CABI]]></value>
+    <description><![CDATA[Password]]></description>
+  </attrib>
+  <attrib name="passwordAuthentication" type="boolean" read-only="false">
+    <value encoded="n"><![CDATA[true]]></value>
+    <description><![CDATA[Sets authentication to password or key file]]></description>
+  </attrib>
+  <attrib name="path" type="Path" read-only="false">
+    <description><![CDATA[Path to the private key]]></description>
+  </attrib>
+  <attrib name="passphrase" type="SecureString" read-only="false">
+    <description><![CDATA[Private key pass-phrase]]></description>
+  </attrib>
+  <attrib name="encoding" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[The encoding to be used. Leave this field empty to use the default system encoding. (Example values: "UTF-8", "ISO-8859-1"...)]]></description>
+  </attrib>
+  <attrib name="vcdLoginCmd" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[The SSH command to run]]></description>
+  </attrib>
+  <attrib name="loginResult" type="number" read-only="false">
+    <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+  </attrib>
+  <attrib name="loginError" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[Error text, if any]]></description>
+  </attrib>
+  <attrib name="loginOutput" type="string" read-only="false">
+    <value encoded="n"><![CDATA[]]></value>
+    <description><![CDATA[Result of running the SSH command]]></description>
+  </attrib>
+  <attrib name="vcdUsername" type="string" read-only="false" conf-id="09378544-877f-483a-9c3f-9b55a4484775" conf-key="vCDUsername">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="vcdPassword" type="string" read-only="false" conf-id="09378544-877f-483a-9c3f-9b55a4484775" conf-key="vCDPassword">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <attrib name="vcdHost" type="string" read-only="false" conf-id="09378544-877f-483a-9c3f-9b55a4484775" conf-key="vcdHost">
+    <value encoded="n"><![CDATA[]]></value>
+  </attrib>
+  <workflow-item name="item0" type="end" end-mode="0">
+    <position y="45.40909090909091" x="664.5"></position>
+  </workflow-item>
+  <workflow-item name="item1" out-name="item0" type="link" linked-workflow-id="90808080808080808080808080808080D28080800120523434428525559a3425f">
+    <display-name><![CDATA[Run SSH command]]></display-name>
+    <in-binding>
+      <bind name="hostNameOrIP" type="string" export-name="hostNameOrIP">
+        <description><![CDATA[Hostname or IP address of the SSH host]]></description>
+      </bind>
+      <bind name="port" type="number" export-name="port">
+        <description><![CDATA[Target port]]></description>
+      </bind>
+      <bind name="username" type="string" export-name="username">
+        <description><![CDATA[Username]]></description>
+      </bind>
+      <bind name="password" type="SecureString" export-name="password">
+        <description><![CDATA[Password]]></description>
+      </bind>
+      <bind name="cmd" type="string" export-name="cmd">
+        <description><![CDATA[The SSH command to run]]></description>
+      </bind>
+      <bind name="passwordAuthentication" type="boolean" export-name="passwordAuthentication">
+        <description><![CDATA[Sets authentication to password or key file]]></description>
+      </bind>
+      <bind name="path" type="Path" export-name="path">
+        <description><![CDATA[Path to the private key]]></description>
+      </bind>
+      <bind name="passphrase" type="SecureString" export-name="passphrase">
+        <description><![CDATA[Private key pass-phrase]]></description>
+      </bind>
+      <bind name="encoding" type="string" export-name="encoding">
+        <description><![CDATA[The encoding to be used. Leave this field empty to use the default system encoding. (Example values: "UTF-8", "ISO-8859-1"...)]]></description>
+      </bind>
+    </in-binding>
+    <out-binding>
+      <bind name="result" type="number" export-name="result">
+        <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+      </bind>
+      <bind name="errorText" type="string" export-name="errorText">
+        <description><![CDATA[Error text, if any]]></description>
+      </bind>
+      <bind name="outputText" type="string" export-name="outputText">
+        <description><![CDATA[Result of running the SSH command]]></description>
+      </bind>
+    </out-binding>
+    <description><![CDATA[Runs an SSH command.]]></description>
+    <position y="55.40909090909091" x="484.5"></position>
+  </workflow-item>
+  <workflow-item name="item2" out-name="item1" type="link" linked-workflow-id="90808080808080808080808080808080D28080800120523434428525559a3425f">
+    <display-name><![CDATA[Run SSH command]]></display-name>
+    <in-binding>
+      <bind name="hostNameOrIP" type="string" export-name="hostNameOrIP">
+        <description><![CDATA[Hostname or IP address of the SSH host]]></description>
+      </bind>
+      <bind name="port" type="number" export-name="port">
+        <description><![CDATA[Target port]]></description>
+      </bind>
+      <bind name="username" type="string" export-name="username">
+        <description><![CDATA[Username]]></description>
+      </bind>
+      <bind name="password" type="SecureString" export-name="password">
+        <description><![CDATA[Password]]></description>
+      </bind>
+      <bind name="cmd" type="string" export-name="vcdLoginCmd">
+        <description><![CDATA[The SSH command to run]]></description>
+      </bind>
+      <bind name="passwordAuthentication" type="boolean" export-name="passwordAuthentication">
+        <description><![CDATA[Sets authentication to password or key file]]></description>
+      </bind>
+      <bind name="path" type="Path" export-name="path">
+        <description><![CDATA[Path to the private key]]></description>
+      </bind>
+      <bind name="passphrase" type="SecureString" export-name="passphrase">
+        <description><![CDATA[Private key pass-phrase]]></description>
+      </bind>
+      <bind name="encoding" type="string" export-name="encoding">
+        <description><![CDATA[The encoding to be used. Leave this field empty to use the default system encoding. (Example values: "UTF-8", "ISO-8859-1"...)]]></description>
+      </bind>
+    </in-binding>
+    <out-binding>
+      <bind name="result" type="number" export-name="loginResult">
+        <description><![CDATA[0 = OK, Negative = Error, Positive = Number of values returned, after error text]]></description>
+      </bind>
+      <bind name="errorText" type="string" export-name="loginError">
+        <description><![CDATA[Error text, if any]]></description>
+      </bind>
+      <bind name="outputText" type="string" export-name="loginOutput">
+        <description><![CDATA[Result of running the SSH command]]></description>
+      </bind>
+    </out-binding>
+    <description><![CDATA[Runs an SSH command.]]></description>
+    <position y="55.40909090909091" x="344.5"></position>
+  </workflow-item>
+  <workflow-item name="item3" out-name="item2" type="task">
+    <display-name><![CDATA[rendervCD login command]]></display-name>
+    <script encoded="false"><![CDATA[//vcd login vcd-01a.corp.local ACME admin --password VMware1! -w -i 
+vcdLoginCmd = ["vcd login", vcdHost, tenant, vcdUsername, "--password", vcdPassword, "-w -i"].join(' ');
+]]></script>
+    <in-binding>
+      <bind name="vcdUsername" type="string" export-name="vcdUsername"></bind>
+      <bind name="vcdPassword" type="string" export-name="vcdPassword"></bind>
+      <bind name="tenant" type="string" export-name="tenant"></bind>
+      <bind name="vcdHost" type="string" export-name="vcdHost"></bind>
+    </in-binding>
+    <out-binding>
+      <bind name="vcdLoginCmd" type="string" export-name="vcdLoginCmd"></bind>
+    </out-binding>
+    <position y="55.40909090909091" x="204.5"></position>
+  </workflow-item>
+  <presentation>
+    <p-param name="cmd">
+      <desc><![CDATA[The SSH command to run]]></desc>
+    </p-param>
+    <p-param name="tenant">
+      <desc><![CDATA[tenant]]></desc>
+    </p-param>
+  </presentation>
+</workflow>

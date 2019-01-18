@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getTemplates" result-type="Array/string" api-version="6.0.0" id="98a95c47-633c-4aa1-9c60-cd7ba3357a4f" version="0.0.0" allowed-operations="vef">
+  <script encoded="false"><![CDATA[return ["photon-v2" , "Ubuntu"];]]></script>
+</dunes-script-module>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getOrgNetworks" result-type="Array/string" api-version="6.0.0" id="dbdbc2e4-5cd0-4fd6-b25f-a14b5dfc8181" version="0.0.0" allowed-operations="vef">
+  <script encoded="false"><![CDATA[return ["T1-OrgNet-Rtd"];]]></script>
+</dunes-script-module>

@@ -1,26 +1,25 @@
-
-
 # container-service-ui-workflow
 
 ## Overview
 
-## Try it out
+vRealize Orchestrator based UI for vCloud Director Container Services Extension
 
-### Prerequisites
+This repository contains a workflow package for vRealize Orchestrator that can be used to publish Container Service Extension tasks into the vCloud Director Service Catalog.
 
-* Prereq 1
-* Prereq 2
-* Prereq 3
+![Screenshot](docs/screenshot.png?raw=true "CSE UI Workflows")
 
-### Build & Run
+## Prerequisites
 
-1. Step 1
-2. Step 2
-3. Step 3
+You need to have the Conatiner Service Extension https://vmware.github.io/container-service-extension/ installed and setup.
+You need to have a vRealize Orchestrator instance registered in vCloud Director.
 
-## Documentation
+## Setup
 
-## Releases & Major Branches
+* Import the worfklow package to vRealize Orchestrator
+* (If not existing yet) Create a RestHost Inventory object for the vCloud Director Host
+* Provide the environment details, credentials for CSE server, ... as values to the Configuration Element "CSE / CSE Environment"
+* Run the workflow "CSE UI / Store Clusters in Cache"
+* Publish the workflows in folder "CSE UI / Frontend" into the vCD Service Library
 
 ## Contributing
 
@@ -30,3 +29,5 @@ questions about the CLA process, please refer to our [FAQ](https://cla.vmware.co
 refer to [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
+
+[BSD-2](LICENSE.txt)

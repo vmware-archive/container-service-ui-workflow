@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getNodeNamesForClusterFromCache" result-type="Array/string" api-version="6.0.0" id="813eaf01-0b21-4136-a4d5-85194a0ff7f8" version="0.0.0" allowed-operations="vef">
+  <param n="clusterName" t="string"><![CDATA[]]></param>
+  <script encoded="false"><![CDATA[var result = [];
+var clusterJson = DynamicTypesManager.getFromCache(clusterName);
+System.debug("got clusterNode Json for " + clusterName + " from cache: " + clusterJson);
+if (clusterJson) {
+var clusters = JSON.parse(clusterJson);
+clusters["master_nodes"].forEach(function(cluster) {result.push(cluster.name)});
+clusters["nodes"].forEach(function(cluster) {result.push(cluster.name)});
+}
+System.debug("all node names: " + result);
+return result;]]></script>
+</dunes-script-module>

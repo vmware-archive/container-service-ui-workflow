@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="getClusterNamesFromCache" result-type="Array/string" api-version="6.0.0" id="ddee8337-b2fc-4d99-89bd-124a8bf6a58e" version="0.0.0" allowed-operations="vef">
+  <script encoded="false"><![CDATA[var result = [];
+var clusterJson = DynamicTypesManager.getFromCache("cseClusters");
+System.debug("got clusterJson from cache: " + clusterJson);
+if (clusterJson) {
+var clusters = JSON.parse(clusterJson);
+clusters.forEach(function(cluster) {result.push(cluster.name)});
+}
+System.debug("all CSE Cluster names: " + result);
+return result;]]></script>
+</dunes-script-module>
