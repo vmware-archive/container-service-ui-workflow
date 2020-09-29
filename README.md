@@ -1,5 +1,7 @@
 # container-service-ui-workflow
 
+### VMware has ended active development of this project, this repository will no longer be updated. Container Service Extension now includes a VCD UI plugin, so these vRO based workflows are not needed anymore.
+
 ## Overview
 
 vRealize Orchestrator based UI for vCloud Director Container Services Extension
